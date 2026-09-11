@@ -17,8 +17,8 @@ OUTPUT_FILE=maze.txt
 PERFECT=True
 
 # conditional part
-seed=42
-algorithm=BFS
+SEED=42
+ALGORITHM=BFS
 ```
 
 This project is perfect for beginers to understand module logic, algorithms, data parsing process and have fun for UI design.
@@ -44,3 +44,4 @@ This project is perfect for beginers to understand module logic, algorithms, dat
 ## 2.2 How to run the program
 
 # 3. Resources
+[Dataclass in Python: Python Documentation](https://docs.python.org/3/library/dataclasses.html)
