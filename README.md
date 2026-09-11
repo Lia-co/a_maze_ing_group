@@ -1,7 +1,7 @@
 *This project has been created as part of the 42 curriculum by betferna and sliang.*
 
-# Description
-## Overview
+# 1. Description
+## 1.1 Overview
 *insert a gif to present the demo*</br>
 A_Maze_Ing project is aimed at make a reusable maze generation program with UI design. The user can pass data into a config file to manage how the maze look like. The config file decides the size of the maze(WIDTH, HEIGHT), entry and exit location(ENTRY, EXIT), the name of output file including maze map in hexdecimal code, and if the maze is perfect(only one path) or not(multiple paths).
 
@@ -23,23 +23,24 @@ algorithm=BFS
 
 This project is perfect for beginers to understand module logic, algorithms, data parsing process and have fun for UI design.
 
-## Tasks distribution
+## 1.2 Tasks distribution
 
-### The structure of files
+### 1.2.1 The structure of files
+### 1.2.2 Decision reasons for distribution
 
-## Data parsing, validation and return object
+## 1.3 Data parsing, validation and return object
 
-## Algorithms choices
+## 1.4 Algorithms choices
 
-### Maze generating algorithm
+### 1.4.1 Maze generating algorithm
 
-### Maze solution path algorithm
+### 1.4.2 Maze solution path algorithm
 
-## UI design
+## 1.5 UI design
 
 
-# Instruction
-## How to install
-## How to run the program
+# 2. Instruction
+## 2.1 How to install
+## 2.2 How to run the program
 
-# Resources
+# 3. Resources
