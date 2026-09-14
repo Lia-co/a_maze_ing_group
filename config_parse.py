@@ -34,7 +34,7 @@ def parse_coord(value: str) -> tuple:
 		x: int = int(coords[0])
 		y: int = int(coords[1])
 	except ValueError as e:
-		raise ValueError(f"Invalid string {value}, expect: x, y are digital numbers(e.g. 20,15)")
+		raise ValueError(f"Invalid string '{value}', expect: x, y are digital numbers(e.g. 20,15)")
 
 
 """
@@ -52,7 +52,7 @@ def parse_bool(value: str) -> bool:
 		return 1
 	elif v in {"false", "n" "no" "0"}:
 		return 0
-	raise ValueError(f"Invalid string: {value}, expect input: true/false.")
+	raise ValueError(f"Invalid string: '{v}', expect input: true/false.")
 
 
 """
@@ -92,12 +92,27 @@ Raise error messages in following conditions:
 - if 
 """
 def parse_config() -> Config:
-	pair: dict[str, str] = {}
+	data: dict[str, str] = {}
 
-	#open file
-	#chunck file content into lines
-	#chunck line into pairs
-	#chunck pair into value and keys
+	#open file with 'with', don't need to handle close file
+	with open("config.txt") as f:
+		# ??? why using for loop for a file can get per line, and \n as a seperator
+		#chunck each line from file into pairs with for loop, skip line start with '#' and empty line
+		for pair in f:
+			pair = pair.strip()
+			if pair.startswith("#") or not pair:
+				continue
+			if not "=" in pair:
+				raise SyntaxError(f"Key '{pair}' must have valid value, expect input: KEY=VALUE")
+			print(pair)
+			
+			#chunck pair into keys and values
+			key, value = pair.split("=", 2)
+			if not key or not value:
+				raise SyntaxError(f"Wrong syntax for '{pair}', expect input: KEY=VALUE ")
+			key = key.strip().upper()
+			value = value.strip()
+			data[key] = value
 
 	#check if there are enough keys
 	#chekc if WIDTH and HEIGHT are valid
@@ -106,3 +121,7 @@ def parse_config() -> Config:
 	#check if PERFECT has valid boolean string
 	#check if SEED has valid digit strings
 	#check if ALGORITHM has valid digit strings
+	return Config
+
+if __name__ == "__main__":
+	parse_config()

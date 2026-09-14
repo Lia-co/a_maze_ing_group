@@ -44,4 +44,6 @@ This project is perfect for beginers to understand module logic, algorithms, dat
 ## 2.2 How to run the program
 
 # 3. Resources
-[Dataclass in Python: Python Documentation](https://docs.python.org/3/library/dataclasses.html)
+[Python Documentation: Dataclass in Python](https://docs.python.org/3/library/dataclasses.html)
+
+[GeeksfoGeeks: Differences and Applications of List, Tuple, Set and Dictionary in Python](https://www.geeksforgeeks.org/python/differences-and-applications-of-list-tuple-set-and-dictionary-in-python/)
