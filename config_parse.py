@@ -60,7 +60,7 @@ def parse_bool(value: str) -> bool:
 Define a dataclass called Config which stores valid input as key: value format.
 It is returned in method parse_config after string input are validated and converted.
 """
-@dataclass
+@dataclass(frozen=True)
 class Config:
 	width: int
 	height: int
