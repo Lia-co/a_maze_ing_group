@@ -29,12 +29,13 @@ If receiving invalid strings, will raise error message
 def parse_coord(value: str) -> tuple:
 	coords = [coor.strip() for coor in value.split(",")]
 	if len(coords) != 2:
-		raise ValueError(f"Not enough valid string {value}, expect: x, y are digital numbers(e.g. 20,15)")
+		raise ValueError(f"Not enough valid input {value}, expect format: x,y are digital numbers(e.g. 20,15)")
 	try:
 		x: int = int(coords[0])
 		y: int = int(coords[1])
 	except ValueError as e:
-		raise ValueError(f"Invalid string '{value}', expect: x, y are digital numbers(e.g. 20,15)")
+		raise ValueError(f"Invalid input '{value}', expect format: x,y are digital numbers(e.g. 20,15)") from e
+	return x,y
 
 
 """
@@ -50,9 +51,9 @@ def parse_bool(value: str) -> bool:
 	v = value.strip().lower()
 	if v in {"true", "y", "yes", "1"}:
 		return 1
-	elif v in {"false", "n" "no" "0"}:
+	elif v in {"false", "n", "no", "0"}:
 		return 0
-	raise ValueError(f"Invalid string: '{v}', expect input: true/false.")
+	raise ValueError(f"Invalid input: '{v}', expect input: true/false.")
 
 
 """
@@ -104,7 +105,6 @@ def parse_config() -> Config:
 				continue
 			if not "=" in pair:
 				raise SyntaxError(f"Key '{pair}' must have valid value, expect input: KEY=VALUE")
-			print(pair)
 			
 			#chunck pair into keys and values
 			key, value = pair.split("=", 2)
@@ -114,14 +114,58 @@ def parse_config() -> Config:
 			value = value.strip()
 			data[key] = value
 
-	#check if there are enough keys
+	#???check if there are enough keys, how to compare them?
+	missing = [key for key in (mandatory_keys) if not key in data]
+	if missing:
+		raise ValueError(f"Missing mandatory key {missing}. Please add {missing}")
+	
 	#chekc if WIDTH and HEIGHT are valid
-	#check if ENTRY and EXIT are the same, inside of field, and outside of 42 pattern
-	#check if OUTPUT_FILE has string
-	#check if PERFECT has valid boolean string
+	#???how to silence the base 10 error.
+	try:
+		width: int = int(data["WIDTH"])
+		height: int = int(data["HEIGHT"])
+	except ValueError as e:
+		raise ValueError("Invalid value for 'WIDTH' or/and 'HEIGHT', expect digital input, e.g. 10") from e
+
+	if width <= 0 or height <=0:
+		raise ValueError(f"Invalid value for 'WIDTH' or/and 'HEIGHT. Integers must greater than 0")
+	
+	#check if ENTRY and EXIT are the same, inside of field, or located 42 pattern
+	entry = parse_coord(data["ENTRY"])
+	exit = parse_coord(data["EXIT"])
+
+	if entry == exit:
+		raise ValueError(f"ENTRY and EXIT are the same. Please make them locating differently.")
+	if entry[0] > width or exit[0] > width:
+		raise ValueError(f"ENTRY's x or/and EXIT's x are outside of width. Expect x <= {width}")
+	if entry[1] > height or exit[1] > height:
+		raise ValueError(f"ENTRY's y or/and EXIT's y are outside of height. Expect y <= {height}")
+	#assign variable output
+	output = data["OUTPUT_FILE"]
+	#assign variable perfect
+	perfect = parse_bool(data["PERFECT"])
 	#check if SEED has valid digit strings
+	try:
+		seed = int(data["SEED"])
+	except ValueError as e:
+		raise ValueError(f"Invalid value for 'SEED', expect digital input, e.g. 10") from e
+	if seed < 0:
+		raise ValueError(f"'SEED' must be positive integer")
 	#check if ALGORITHM has valid digit strings
-	return Config
+	algorithm = data["ALGORITHM"]
+
+	return Config(
+		width = width,
+		height = height,
+		entry = entry,
+		exit = exit,
+		output_file = output,
+		perfect = perfect,
+		seed = seed,
+		algorithm = algorithm
+	)
 
 if __name__ == "__main__":
-	parse_config()
+	print(parse_config())
+	
+	
