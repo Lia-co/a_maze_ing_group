@@ -72,7 +72,6 @@ class Config:
 	algorithm: str
 
 
-
 """
 Parse config.txt file to validate KEY=VALUE pair per line and return an immutable class 
 including valid data for later generating a maze.
@@ -136,6 +135,7 @@ def parse_config() -> Config:
 
 	if entry == exit:
 		raise ValueError(f"ENTRY and EXIT are the same. Please make them locating differently.")
+	#bounce check needed more discussion
 	if entry[0] > width or exit[0] > width:
 		raise ValueError(f"ENTRY's x or/and EXIT's x are outside of width. Expect x <= {width}")
 	if entry[1] > height or exit[1] > height:
