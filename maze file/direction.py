@@ -58,4 +58,3 @@ DIR_MOVE: Final[dict[str, tuple[int, int]]] = {
     "S": (0, +1),
     "W": (-1, 0)
 }
-
