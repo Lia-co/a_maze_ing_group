@@ -39,7 +39,7 @@ def parse_coord(value: str) -> tuple:
 
 
 """
-Parse accepetable string into boolean(1/0).
+Parse acceptable string into boolean(1/0).
 
 Acceptable strings look like:
 "true", "y", "yes", "1"
