@@ -1,4 +1,4 @@
-#!bin/end python3
+#!/usr/bin/env python3
 
 from mlx import Mlx
 

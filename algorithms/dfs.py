@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Depth-first search algorithm - iterative implementatoin (with stack)
 With a stack to track visited cells, and it will reach every cell. When all

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 """
 This file parse the config.txt and return an immutable object with valid data for later generating a maze.
