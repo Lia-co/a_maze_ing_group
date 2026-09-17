@@ -1,9 +1,9 @@
 # config file must contain one "key=value" pair per line
 # mandatory part
-WIDTH=20
-HEIGHT=10
-ENTRY=19,1
-EXIT=19,0
+WIDTH=7
+HEIGHT=7
+ENTRY=4,1
+EXIT=5,0
 OUTPUT_FILE=maze.txt
 PERFECT=0
 
