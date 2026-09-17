@@ -3,6 +3,7 @@
 import random
 from typing import Any, List, Tuple
 from utils.config_parse import Config
+from utils.cell import Cell
 
 """
 generate a maze using Prim's algorithm
@@ -15,9 +16,6 @@ generate a maze using Prim's algorithm
 7 - Completion: Repeat the process until the frontier list is completely empty; the maze is now complete.
 
 """
-import random
-from typing import Any, List, Tuple
-from utils.cell import Cell
 
 
 def remove_walls(current: Cell, neighbor: Cell) -> None:
