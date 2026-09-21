@@ -49,3 +49,5 @@ This project is perfect for beginers to understand module logic, algorithms, dat
 [GeeksfoGeeks: Differences and Applications of List, Tuple, Set and Dictionary in Python](https://www.geeksforgeeks.org/python/differences-and-applications-of-list-tuple-set-and-dictionary-in-python/)
 
 [Wikipedia: Maze generation algorithm](https://en.wikipedia.org/wiki/Maze_generation_algorithm)
+
+[W3school: Python Random seed() Method](https://www.w3schools.com/PYTHON/ref_random_seed.asp)
