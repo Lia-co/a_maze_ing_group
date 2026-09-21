@@ -6,7 +6,7 @@ This file includes wall operations like:
 """
 
 from . import direction as dir
-from .maze import Maze
+from .maze import maze
 
 """
 The method opens the wall of a cell by making the bit mask as 0.
