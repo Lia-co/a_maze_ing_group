@@ -22,6 +22,7 @@ opening or not.
 """
 
 from typing import Final
+#???maybe I can use enum to difine class
 
 """
 Define four directions with final[], making variable impossible to redefine
@@ -31,7 +32,7 @@ DIRECTIONS: Final[tuple[str, ...]] = ("N", "E", "S", "W")
 """
 Bit masks wall's direction
 """
-DIR_BIT_VAL: Final[dict[str, int]] = {
+DIR_BIT: Final[dict[str, int]] = {
     "N": 1,
     "E": 2,
     "S": 4,
@@ -59,3 +60,28 @@ DIR_MOVE: Final[dict[str, tuple[int, int]]] = {
     "S": (0, +1),
     "W": (-1, 0)
 }
+
+"""
+Pass direction of wall and return its bit mask
+"""
+def wall_bit(direction: str) -> int:
+	if not direction or direction not in DIR_BIT:
+		raise ValueError(f"The {direction} is not valid, expect input: N/E/S/W")
+	return DIR_BIT[direction]
+
+
+"""
+Pass curent wall direction and return the wall direction of adjecent cell
+"""
+def adjecent_wall(direction: str) -> str:
+	if not direction or direction not in DIR_OPPOSITE:
+		raise ValueError(f"The {direction} is not valid, expect input: N/E/S/W")
+	return DIR_OPPOSITE[direction]
+
+"""
+Pass curent wall direction and return the tuple of adjecent cell
+"""
+def move_cell(direction: str) -> tuple:
+	if not direction or direction not in DIR_MOVE:
+		raise ValueError(f"The {direction} is not valid, expect input: N/E/S/W")
+	return DIR_MOVE(direction)
