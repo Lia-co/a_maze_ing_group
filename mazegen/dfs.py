@@ -70,7 +70,7 @@ def dfs_maze_generate(maze: maze, seed: int) -> None:
         else:
             dfs_stack.pop()
 
-
+    # check if visited cells are in forbidden pattern or outside of the maze
 
 
 
