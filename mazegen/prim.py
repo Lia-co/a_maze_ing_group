@@ -2,7 +2,7 @@
 
 import random
 from typing import Any, List, Tuple
-from utils.config_parse import Config
+from utils.config_parse import Config #?why Config is not accessible?
 from utils.cell import Cell
 
 """
