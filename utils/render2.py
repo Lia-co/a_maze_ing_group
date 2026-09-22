@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import sys
-#???what is Any?
+# ???what is Any?
 from typing import Any
-#???why mlx is not resolved?
+# ???why mlx is not resolved?
 from mlx import Mlx
-#from mazegen.prim import grid
+# from mazegen.prim import grid
 
 CELL = 30
 COLOR_WALL = 0xFFFFFF   # White
@@ -108,11 +108,11 @@ class MazeVisualizer:
     def start(self) -> None:
         self.m.mlx_loop(self.ptr)
 
-                    
+
     def start(self) -> None:
         self.render_maze()
         self.m.mlx_loop(self.ptr)
-    
+
     def start(self) -> None:
         img = self.m.mlx_new_image(self.ptr, 500, 500)
 
@@ -137,4 +137,3 @@ class MazeVisualizer:
         )
 
         self.m.mlx_loop(self.ptr)
-
