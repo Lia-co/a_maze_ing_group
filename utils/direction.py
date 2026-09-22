@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 This file defines:
 - directions: N, E, S, W
@@ -22,7 +23,7 @@ opening or not.
 """
 
 from typing import Final
-#???maybe I can use enum to difine class
+# ???maybe I can use enum to difine class
 
 """
 Define four directions with final[], making variable impossible to redefine
@@ -61,27 +62,23 @@ DIR_MOVE: Final[dict[str, tuple[int, int]]] = {
     "W": (-1, 0)
 }
 
-"""
-Pass direction of wall and return its bit mask
-"""
+
 def wall_bit(direction: str) -> int:
-	if not direction or direction not in DIR_BIT:
-		raise ValueError(f"The {direction} is not valid, expect input: N/E/S/W")
-	return DIR_BIT[direction]
+    """Pass direction of wall and return its bit mask"""
+    if not direction or direction not in DIR_BIT:
+        raise ValueError(f"Invalid: {direction}, expect input: N/E/S/W")
+    return DIR_BIT[direction]
 
 
-"""
-Pass curent wall direction and return the wall direction of adjecent cell
-"""
 def adjecent_wall(direction: str) -> str:
-	if not direction or direction not in DIR_OPPOSITE:
-		raise ValueError(f"The {direction} is not valid, expect input: N/E/S/W")
-	return DIR_OPPOSITE[direction]
+    """Pass curent wall direction and return the direction of adjecent cell"""
+    if not direction or direction not in DIR_OPPOSITE:
+        raise ValueError(f"Invalid: {direction}, expect input: N/E/S/W")
+    return DIR_OPPOSITE[direction]
 
-"""
-Pass curent wall direction and return the tuple of adjecent cell
-"""
+
 def move_cell(direction: str) -> tuple:
-	if not direction or direction not in DIR_MOVE:
-		raise ValueError(f"The {direction} is not valid, expect input: N/E/S/W")
-	return DIR_MOVE(direction)
+    """Pass curent wall direction and return the tuple of adjecent cell"""
+    if not direction or direction not in DIR_MOVE:
+        raise ValueError(f"Invalid: {direction}, expect input: N/E/S/W")
+    return DIR_MOVE(direction)

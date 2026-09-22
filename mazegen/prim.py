@@ -6,7 +6,7 @@ from utils.config_parse import Config #?why Config is not accessible?
 from utils.cell import Cell
 
 """
-generate a maze using Prim's algorithm
+This file is about generating a maze using Prim's algorithm
 1 - Starting Point: Pick a random cell from the grid, mark it as "visited", and add all of its adjacent walls to a frontier list.
 2 - Random Selection: While the frontier list is not empty, pick a wall at random from that list.
 3 - Connection Check: Check the two cells divided by that wall. If only one of them has been visited:
@@ -14,7 +14,6 @@ generate a maze using Prim's algorithm
 5 - Incorporation: Mark the unvisited cell as "visited" and add its neighboring walls to the frontier list.
 6 - Discard: If both cells are already visited, simply remove the wall from the list without doing anything (to prevent creating loops/cycles).
 7 - Completion: Repeat the process until the frontier list is completely empty; the maze is now complete.
-
 """
 
 
