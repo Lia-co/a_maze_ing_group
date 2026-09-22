@@ -31,13 +31,45 @@ This project is perfect for beginers to understand module logic, algorithms, dat
 ## 1.3 Data parsing, validation and return object
 
 ## 1.4 Algorithms choices
+For algorithms of generating maze, we choose Depth-first search algorithm, one of the most common choices, and Prim's algorithm.
+
+For maze solution, we choose Breadth First Search algorithm. It starts at a starting point, and visit other cells level by level, which means visiting all adjcent cells. 
 
 ### 1.4.1 Maze generating algorithm
+Depth-first search algorithm - iterative implementatoin (with stack)
+With a stack to track visited cells, and it will reach every cell. When all
+cells are visited, it trackback to the entry point.
+
+This algorithm follows below steps:
+1. Choose the initial cell, mark it as visited and push it to the stack
+2. While the stack is not empty
+    2.1 Pop a cell from the stack and make it a current cell
+    2.2 If the current cell has any neighbours which have not been visited
+        2.2.1 Push the current cell to the stack
+        2.2.2 Choose one of the unvisited neighbours
+        2.2.3 Remove the wall between the current cell and the chosen cell
+        2.2.4 Mark the chosen cell as visited and push it to the stack
+
+Prim's algorithm
+This algorithm follows below steps:
+1. Pick a random cell, mark it as visited
+2. Add the cell's all adjacent walls to a frontier list.
+3. While the frontier list is not empty:
+    3.1 Randomly pick a wall from frontier list.
+    3.2 Check if the two cells divided by that wall.
+        3.2.1 If only one of them has been visited:
+        3.2.2 Carve the wall to connect both cells.
+4. Mark the unvisited cell as "visited" and repeat from step 2.
+5. If both cells are already visited, simply remove the wall from the list
+without doing anything (to prevent creating loops/cycles).
+
+While the frontier list is completely empty and the maze is generated.
 
 ### 1.4.2 Maze solution path algorithm
+BFS will find the shortest path from entry to exit. It tracks visited cells and adjecent cells for visiting later.
 
 ## 1.5 UI design
-
+We decide to use MiniLibX(MLX) as interface window. with MLX, we can have more space for UI design and make it more fun. 
 
 # 2. Instruction
 ## 2.1 How to install
@@ -48,6 +80,14 @@ This project is perfect for beginers to understand module logic, algorithms, dat
 
 [GeeksfoGeeks: Differences and Applications of List, Tuple, Set and Dictionary in Python](https://www.geeksforgeeks.org/python/differences-and-applications-of-list-tuple-set-and-dictionary-in-python/)
 
+[W3Schools: Python Random seed() Method](https://www.w3schools.com/PYTHON/ref_random_seed.asp)
+
+[W3Schools: Python List pop() Method](https://www.w3schools.com/python/ref_list_pop.asp)
+
+[W3Schools: Python list() Function](https://www.w3schools.com/python/ref_func_list.asp)
+
+[GeeksforGeeks: Deque in Python](https://www.geeksforgeeks.org/python/deque-in-python/)
+
 [Wikipedia: Maze generation algorithm](https://en.wikipedia.org/wiki/Maze_generation_algorithm)
 
-[W3school: Python Random seed() Method](https://www.w3schools.com/PYTHON/ref_random_seed.asp)
+[Breadth First Search or BFS for a Graph](https://www.geeksforgeeks.org/dsa/breadth-first-search-or-bfs-for-a-graph/)
