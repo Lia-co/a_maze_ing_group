@@ -1,8 +1,8 @@
 """
-This file includes wall operations like: 
+This file includes wall operations like:
 - open/close a wall of a cell
 - check if the wall exisists in a direction
-- carve walls for adjecent cells 
+- carve walls for adjecent cells
 """
 
 from . import direction as dir

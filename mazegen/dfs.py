@@ -7,7 +7,11 @@ from utils import direction as dir
 from utils import wall as wall
 
 
-def dfs_maze_generate(maze: maze, seed: int) -> None:
+def dfs_maze_generate(
+        maze: maze,
+        seed: int,
+        pattern: set[tuple[int, int]],
+        ) -> None:
     """Depth-first search algorithm - iterative implementatoin (with stack)
     With a stack to track visited cells, and it will reach every cell. When all
     cells are visited, it trackback to the entry point.
@@ -70,6 +74,11 @@ def dfs_maze_generate(maze: maze, seed: int) -> None:
             dfs_stack.pop()
 
     # check if visited cells are in forbidden pattern or outside of the maze
+    if (len(visited_cell) < (maze.width * maze.height - len(pattern))):
+        raise ValueError("Not all cells are visited.")
+    elif (len(visited_cell) > (maze.width * maze.height - len(pattern))):
+        raise ValueError("Invalid. The amount of visited cells more than the"
+                         "amount of maze.")
 
 
 
