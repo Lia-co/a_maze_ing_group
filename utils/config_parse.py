@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
 """
-This file parse the config.txt and return an immutable object with valid data for later generating a maze.
+This file parse the config.txt and return an immutable object with valid data
+for later generating a maze.
 
 The parsing process is separated into 3 stages:
 - read the file and find valid KEY=VALUE pair per line
 - validate data and convert to valid data types
 - store data into an immutable class and return it
 
-Each stage will raise error message if there is invalid input, and give back a clear error message instead 
-of crashing the program. 
+Each stage will raise error message if there is invalid input, and give back a
+clear error message instead 
+of crashing the program.
 """
 
 from __future__ import annotations

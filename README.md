@@ -5,6 +5,19 @@
 *insert a gif to present the demo*</br>
 A_Maze_Ing project is aimed at make a reusable maze generation program with UI design. The user can pass data into a config file to manage how the maze look like. The config file decides the size of the maze(WIDTH, HEIGHT), entry and exit location(ENTRY, EXIT), the name of output file including maze map in hexdecimal code, and if the maze is perfect(only one path) or not(multiple paths).
 
+This project is perfect for beginers to understand module logic, algorithms, data parsing process and have fun for UI design.
+
+## 1.2 Tasks distribution
+
+
+### 1.2.1 The structure of files
+present a tree screenshot and explain briefly
+### 1.2.2 Decision reasons for distribution
+
+## 1.3 Data parsing, validation and return object
+This project needs to parse the config.txt and return an immutable object with valid data
+for later generating a maze.
+
 Here is an example of a config file:
 ```
 # config file
@@ -21,19 +34,19 @@ SEED=42
 ALGORITHM=BFS
 ```
 
-This project is perfect for beginers to understand module logic, algorithms, data parsing process and have fun for UI design.
+The parsing process is separated into 3 stages:
+- read the file and find valid KEY=VALUE pair per line
+- validate data and convert to valid data types
+- store data into an immutable class and return it
+and all empty line or line comment line (start with '#') will be skipped
 
-## 1.2 Tasks distribution
-
-### 1.2.1 The structure of files
-### 1.2.2 Decision reasons for distribution
-
-## 1.3 Data parsing, validation and return object
 
 ## 1.4 Algorithms choices
-For algorithms of generating maze, we choose Depth-first search algorithm, one of the most common choices, and Prim's algorithm.
+For algorithms of generating maze, we choose Depth-first search algorithm, one of the most common choices, and Prim's algorithm. DFS is suitable for what? Why Prim is special?
 
-For maze solution, we choose Breadth First Search algorithm. It starts at a starting point, and visit other cells level by level, which means visiting all adjcent cells. 
+For maze solution, we choose Breadth First Search algorithm. 
+This algorithm is suitable to find the shortest path since it looks for the exit as navigation. 
+It starts at a starting point, and visit other cells level by level, which means visiting all adjcent cells. 
 
 ### 1.4.1 Maze generating algorithm
 Depth-first search algorithm - iterative implementatoin (with stack)
