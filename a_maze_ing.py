@@ -2,13 +2,14 @@
 
 from utils.config_parse import parse_config
 from utils.render import MazeVisualizer
-from mazegen.prim import generate_prim_maze
+# from mazegen.prim import generate_prim_maze
+from mazegen.dfs import dfs_maze_generate
 
 
 if __name__ == "__main__":
     config = parse_config()
-    # maze = generate_prim_maze(config)
-    
+   # maze = generate_prim_maze(config)
+    maze = dfs_maze_generate(config)
 
     # print maze for testing
     print(f"Laberinth generated: {len(maze[0])}x{len(maze)} ({len(maze) * len(maze[0])} total cells).")

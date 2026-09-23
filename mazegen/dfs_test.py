@@ -1,30 +1,17 @@
 #!/usr/bin/env python3
 
+
+from utils.maze import maze
 import random
-from typing import Any, List, Tuple
-from utils.cell import Cell
+from utils import direction as dir
+from utils import wall as wall
 
 
-def remove_walls(current: Cell, neighbor: Cell) -> None:
-    """Carves a passage between two adjacent cells."""
-    dx = neighbor.x - current.x
-    dy = neighbor.y - current.y
-
-    if dx == 1:       # Neighbor is East
-        current.east = False
-        neighbor.west = False
-    elif dx == -1:    # Neighbor is West
-        current.west = False
-        neighbor.east = False
-    elif dy == 1:     # Neighbor is South
-        current.south = False
-        neighbor.north = False
-    elif dy == -1:    # Neighbor is North
-        current.north = False
-        neighbor.south = False
-
-
-def dfs_maze_generate(config: Any) -> List[List[Cell]]:
+def dfs_maze_generate(
+        maze: maze,
+        seed: int,
+        pattern: set[tuple[int, int]],
+        ) -> None:
     """Depth-first search algorithm - iterative implementatoin (with stack)
     With a stack to track visited cells, and it will reach every cell. When all
     cells are visited, it trackback to the entry point.
@@ -38,20 +25,14 @@ def dfs_maze_generate(config: Any) -> List[List[Cell]]:
             2.2.2 Choose one of the unvisited neighbours
             2.2.3 Remove the wall between the current cell and the chosen cell
             2.2.4 Mark the chosen cell as visited and push it to the stack"""
-    if config.seed is not None and config.seed >= 0:
-        random.seed(config.seed)
-
-    width, height = config.width, config.height
-
-    grid = [[Cell(x, y) for x in range(width)] for y in range(height)]
-
+    random.seed(seed)
     # track visited cells
     visited_cell: list[tuple[int, int]] = []
     # DFS stack: track path of cells
     dfs_stack: list[tuple[int, int]] = []
 
     # choose the initial cell
-    init_cell: Tuple[int, int] = config.entry
+    init_cell: tuple[int, int] = maze.entry
     x, y = init_cell
     # mark the initial cell as visited
     visited_cell.append(init_cell)
@@ -64,27 +45,26 @@ def dfs_maze_generate(config: Any) -> List[List[Cell]]:
         current_cell = dfs_stack[-1]
         x, y = current_cell
         # look for unvisited neigbor cells in 4 directions
-        unvisited_neighbor: list[Tuple[int, int]] = []
-        directions = [(0, -1), (0, 1), (1, 0), (-1, 0)]
-        for dx, dy in directions:
+        unvisited_neighbor: list[tuple[int, int]] = []
+        for direction in dir.DIR_MOVE:
+            dx, dy = dir.DIR_MOVE[direction]
             nx = x + dx
             ny = y + dy
             # if neigbor cell is within the maze
-            if 0 < nx < width and 0 < ny < height:
+            if 0 < nx < maze.width and 0 < ny < maze.height:
                 neighbor: list[int, int] = (nx, ny)
-                # !need to add not in 42 pattern
-                if neighbor not in visited_cell:
+                if neighbor not in visited_cell and neighbor not in pattern:
                     unvisited_neighbor.append(neighbor)
 
         # If the current cell has any neighbours which have not been visited
         # keep randomly picking until unvisited cells in maze is none
         if len(unvisited_neighbor) != 0:
-            random_cell = random.randint(0, (len(unvisited_neighbor) - 1))
+            random_cell = random.randint(0, len(unvisited_neighbor) - 1)
             # Choose one of the unvisited neighbours
-            neighbor_cell = unvisited_neighbor[random_cell]
+            neighbor_cell = unvisited_neighbor(random_cell)
 
             # Remove the wall between the current cell and the chosen cell
-            remove_walls(current_cell, neighbor_cell)
+            wall.carve_walls(current_cell, neighbor_cell)
             # Mark the chosen cell as visited and push it to the stack
             visited_cell.append(neighbor_cell)
             dfs_stack.append(neighbor_cell)
@@ -94,10 +74,8 @@ def dfs_maze_generate(config: Any) -> List[List[Cell]]:
             dfs_stack.pop()
 
     # check if visited cells are in forbidden pattern or outside of the maze
-    # if (len(visited_cell) < (width * height - len(pattern))):
-    #     raise ValueError("Not all cells are visited.")
-    # elif (len(visited_cell) > (width * height - len(pattern))):
-    #     raise ValueError("Invalid. The amount of visited cells more than the"
-    #                      "amount of maze.")
-
-    return grid
+    if (len(visited_cell) < (maze.width * maze.height - len(pattern))):
+        raise ValueError("Not all cells are visited.")
+    elif (len(visited_cell) > (maze.width * maze.height - len(pattern))):
+        raise ValueError("Invalid. The amount of visited cells more than the"
+                         "amount of maze.")
