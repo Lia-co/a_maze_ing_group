@@ -8,8 +8,8 @@ from utils import direction as dir
 from utils import wall
 from utils.maze import maze
 from collections import deque
-# ???why import optional?
-from typing import Optional 
+# attribute could be a specific data type or None
+from typing import Optional
 
 
 def bfs_maze_solver(maze: maze, pattern: set) -> list[tuple[int, int]]:
@@ -18,7 +18,7 @@ def bfs_maze_solver(maze: maze, pattern: set) -> list[tuple[int, int]]:
 
     # track visited cells as a set, mark entry as visited
     visited_cell: set[tuple[int, int]] = {}
-    # ???why append() is not allowed?
+    # add() for set, unorder collection; append() for list, ordered collection
     visited_cell.add(maze.entry)
 
     # track frontier cells waiting for visiting later
@@ -60,7 +60,7 @@ def bfs_maze_solver(maze: maze, pattern: set) -> list[tuple[int, int]]:
 
     # check if exit in path
     if maze.exit not in path_tree:
-        raise ValueError("EXIT is not viited.")
+        raise ValueError("EXIT is not visited.")
     # if exit in path, then reconstruct path from exit to entry
     else:
         last_spot: Optional[tuple[int, int]] = maze.exit

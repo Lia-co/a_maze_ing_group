@@ -1,9 +1,9 @@
 PY = .venv/bin/python3
-#what if it is already exits?
 VENV = .venv
 #VENV_BIN = $(VENV)/bin
 CFG = config.txt
-MAIN = a-maze-ing.py
+#what if it is already exits?
+MAIN = a_maze_ing.py
 OTP = maze.txt
 MYPY_F = --explicit-package-bases --warn-return-any \
 		--ignore-missing-imports --disallow-untyped-defs --check-untyped-defs

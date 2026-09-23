@@ -2,7 +2,7 @@
 
 import random
 from typing import Any, List, Tuple
-from utils.config_parse import Config #?why Config is not accessible?
+from utils.config_parse import Config
 from utils.cell import Cell
 
 """
@@ -43,10 +43,10 @@ def remove_walls(current: Cell, neighbor: Cell) -> None:
 
 
 def generate_prim_maze(config: Any) -> List[List[Cell]]:
-    if config.seed is not None and config.seed >= 0:
-        random.seed(config.seed)
+    if Config.seed is not None and Config.seed >= 0:
+        random.seed(Config.seed)
 
-    width, height = config.width, config.height
+    width, height = Config.width, Config.height
 
     # 1. Initialize grid using your existing Cell class
     grid = [[Cell(x, y) for x in range(width)] for y in range(height)]
