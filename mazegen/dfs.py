@@ -79,9 +79,3 @@ def dfs_maze_generate(
     elif (len(visited_cell) > (maze.width * maze.height - len(pattern))):
         raise ValueError("Invalid. The amount of visited cells more than the"
                          "amount of maze.")
-
-
-
-
-
-

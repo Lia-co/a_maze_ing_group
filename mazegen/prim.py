@@ -2,7 +2,6 @@
 
 import random
 from typing import Any, List, Tuple
-from utils.config_parse import Config
 from utils.cell import Cell
 
 """
@@ -43,10 +42,10 @@ def remove_walls(current: Cell, neighbor: Cell) -> None:
 
 
 def generate_prim_maze(config: Any) -> List[List[Cell]]:
-    if Config.seed is not None and Config.seed >= 0:
-        random.seed(Config.seed)
+    if config.seed is not None and config.seed >= 0:
+        random.seed(config.seed)
 
-    width, height = Config.width, Config.height
+    width, height = config.width, config.height
 
     # 1. Initialize grid using your existing Cell class
     grid = [[Cell(x, y) for x in range(width)] for y in range(height)]

@@ -3,14 +3,14 @@
 from utils.config_parse import parse_config
 from utils.render import MazeVisualizer
 from mazegen.prim import generate_prim_maze
-from utils.cell import Cell
 
 
 if __name__ == "__main__":
     config = parse_config()
-    maze = generate_prim_maze(config)
+    # maze = generate_prim_maze(config)
+    
 
-    #print maze for testing
+    # print maze for testing
     print(f"Laberinth generated: {len(maze[0])}x{len(maze)} ({len(maze) * len(maze[0])} total cells).")
     # --- print maze on terminal for testing ---
     print(f"\n--- DISPLAY MAZE FOR TESTING ({config.width}x{config.height}) ---")
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         print(line)
     print("-" * 40)
 
-    solution = {(0,0), (1,0), (1,1)} 
+    solution = {(0, 0), (1, 0), (1, 1)}
 
     renderer = MazeVisualizer(maze, config, solution)
     try:
