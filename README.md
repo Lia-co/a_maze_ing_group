@@ -79,7 +79,9 @@ without doing anything (to prevent creating loops/cycles).
 While the frontier list is completely empty and the maze is generated.
 
 ### 1.4.2 Maze solution path algorithm
-BFS will find the shortest path from entry to exit. It tracks visited cells and adjecent cells for visiting later.
+Since this algorithm explores the grid level by level, the first time when it reaches the exit, it is the shortest path. Imagine a picture of ripples in water, the first time when the ripple reaches shore, it is the shortest way.
+
+It is perfect for unweighted maze when compared with other A* and Dijkstra's algorithm, which requires additional heuristic or weight-tracking. DFS can also be used as maze solution algorithm, however, it goes by depth first and it may find the solution quickly, but it is not guaranteed as the shortest one.  
 
 ## 1.5 UI design
 We decide to use MiniLibX(MLX) as interface window. with MLX, we can have more space for UI design and make it more fun. 

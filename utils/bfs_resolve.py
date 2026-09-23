@@ -8,7 +8,7 @@ from utils import direction as dir
 from utils import wall
 from utils.maze import maze
 from collections import deque
-# attribute could be a specific data type or None
+# with typing.Optional attribute could be a specific data type or None
 from typing import Optional
 
 
