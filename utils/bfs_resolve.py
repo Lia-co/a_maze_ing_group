@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Breadth-first Search (BFS) Solution
 """
