@@ -43,53 +43,48 @@ def dfs_maze_generate(config: Any) -> List[List[Cell]]:
 
     width, height = config.width, config.height
 
+    # 1. Initialize grid using existing Cell class and stack to track path
     grid = [[Cell(x, y) for x in range(width)] for y in range(height)]
-
-    # track visited cells
-    visited_cell: list[tuple[int, int]] = []
-    # DFS stack: track path of cells
     dfs_stack: list[tuple[int, int]] = []
 
-    # choose the initial cell
+    # 2. Pick the start cell and mark it as visited
     init_cell: Tuple[int, int] = config.entry
     x, y = init_cell
-    # mark the initial cell as visited
-    visited_cell.append(init_cell)
-    # mark the initial cell into stack
-    dfs_stack.append(init_cell)
+    start_cell = grid[y][x]
+    start_cell.visited = True
+    dfs_stack.append(start_cell)
 
-    # While the stack is not empty
-    while len(dfs_stack) != 0:
-        # Pop a cell from the stack and make it a current cell
-        current_cell = dfs_stack[-1]
-        x, y = current_cell
-        # look for unvisited neigbor cells in 4 directions
-        unvisited_neighbor: list[Tuple[int, int]] = []
+    # 3. look for unvisited neigbor cells in 4 directions
+    def add_frontier(cell: Cell) -> List[Cell]:
+        """Adds unvisited neighbors of a cell to the frontier list."""
+        frontier: list[Cell] = []
         directions = [(0, -1), (0, 1), (1, 0), (-1, 0)]
         for dx, dy in directions:
-            nx = x + dx
-            ny = y + dy
+            nx, ny = cell.x + dx, cell.y + dy
             # if neigbor cell is within the maze
-            if 0 < nx < width and 0 < ny < height:
-                neighbor: list[int, int] = (nx, ny)
+            if 0 <= nx < width and 0 <= ny < height:
+                neighbor = grid[ny][nx]
                 # !need to add not in 42 pattern
-                if neighbor not in visited_cell:
-                    unvisited_neighbor.append(neighbor)
+                if not neighbor.visited:
+                    frontier.append(neighbor)
+        return frontier
+
+    # 4. main dfs' generation loop
+    while dfs_stack:
+        # Pop a cell from the stack and make it a current cell
+        current_cell = dfs_stack[-1]
+        candidates = add_frontier(current_cell)
 
         # If the current cell has any neighbours which have not been visited
         # keep randomly picking until unvisited cells in maze is none
-        if len(unvisited_neighbor) != 0:
-            random_cell = random.randint(0, (len(unvisited_neighbor) - 1))
-            # Choose one of the unvisited neighbours
-            neighbor_cell = unvisited_neighbor[random_cell]
-
-            # Remove the wall between the current cell and the chosen cell
+        if candidates:
+            neighbor_cell = random.choice(candidates)
+            # Remove the wall
             remove_walls(current_cell, neighbor_cell)
             # Mark the chosen cell as visited and push it to the stack
-            visited_cell.append(neighbor_cell)
+            neighbor_cell.visited = True
             dfs_stack.append(neighbor_cell)
 
-        # ???why this step?
         else:
             dfs_stack.pop()
 

@@ -2,12 +2,12 @@ import sys
 from typing import Any
 from mlx import Mlx
 
-#amount of pixels x cell
+# amount of pixels x cell
 CELL = 30
 
-COLOR_WALL = 0xFFFFFF   #white
-COLOR_ENTRY = 0x00FF00  #green
-COLOR_EXIT = 0xFF0000   #red
+COLOR_WALL = 0xFFFFFF   # white
+COLOR_ENTRY = 0x00FF00  # green
+COLOR_EXIT = 0xFF0000   # red
 
 
 class MazeVisualizer:
