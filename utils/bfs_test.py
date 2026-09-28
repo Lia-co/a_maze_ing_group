@@ -29,17 +29,12 @@ def check_wall(current: Cell, neighbor: Cell) -> None:
 
 
 def bfs_maze_solver(config: Config, grid: List[List[Cell]]) -> list[tuple[int, int]]:
-    # get the entry coordinates from maze
     x, y = config.entry
 
-    # track visited cells as a set, mark entry as visited
     visited_cell: set[tuple[int, int]] = {}
-    # add() for set, unorder collection; append() for list, ordered collection
     visited_cell.add(config.entry)
 
-    # track frontier cells waiting for visiting later
     cell_to_visit: deque[tuple[int, int]] = deque()
-    # ???why entry is to visit?
     cell_to_visit.append(config.entry)
 
     # Map each cell's parent cell in BFS tree (child -> parent)
@@ -56,14 +51,21 @@ def bfs_maze_solver(config: Config, grid: List[List[Cell]]) -> list[tuple[int, i
             break
 
         # move to all adjcent cells
-        for direction in dir.DIRECTIONS:
-            dx, dy = dir.DIR_MOVE(direction)
-            nx = x + dx
-            ny = y + dy
+        def add_frontier(cell: Cell) -> List[Cell]:
+            """Adds unvisited neighbors of a cell to the frontier list."""
+            frontier: list[Cell] = []
+            directions = [(0, -1), (0, 1), (1, 0), (-1, 0)]
+            for dx, dy in directions:
+                nx, ny = cell.x + dx, cell.y + dy
+                # if neigbor cell is within the maze
+                if 0 <= nx < config.width and 0 <= ny < config.height:
+                    neighbor = grid[ny][nx]
+                    if not neighbor.visited:
+                        frontier.append(neighbor)
+            return frontier
 
         # check if neighbor cell inside of maze
-        # can >= 0 || <=maze.width
-        if 0 < nx < config.width and 0 < ny < config.height:
+        if 0 <= nx < config.width and 0 <= ny < config.height:
             # if there is no wall between cell and the wall direction
             if check_wall(current_cell_bitmask, dir.DIR_BIT(direction)) is False:
                 neighbor: list[int, int] = nx, ny
