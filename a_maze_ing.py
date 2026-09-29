@@ -9,8 +9,8 @@ from utils.bfs_resolve import bfs_maze_solver
 
 if __name__ == "__main__":
     config = parse_config()
-    maze = generate_prim_maze(config)
-   # maze = dfs_maze_generate(config)
+    #maze = generate_prim_maze(config)
+    maze = dfs_maze_generate(config)
     # solution_path = bfs_maze_solver(config, maze)
 
     # print maze for testing

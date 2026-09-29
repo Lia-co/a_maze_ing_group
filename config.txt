@@ -5,7 +5,7 @@ HEIGHT=20
 ENTRY=4,1
 EXIT=15,0
 OUTPUT_FILE=maze.txt
-PERFECT=1
+PERFECT=0
 
 # optional part
 SEED=42
