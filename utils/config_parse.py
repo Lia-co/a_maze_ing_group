@@ -50,9 +50,9 @@ def parse_bool(value: str) -> bool:
     """
     v = value.strip().lower()
     if v in {"true", "y", "yes", "1"}:
-        return 1
+        return True
     elif v in {"false", "n", "no", "0"}:
-        return 0
+        return False
     raise ValueError(f"Invalid input: '{v}', expect input: true/false.")
 
 
