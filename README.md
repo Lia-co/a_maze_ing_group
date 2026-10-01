@@ -45,8 +45,7 @@ and all empty line or line comment line (start with '#') will be skipped
 For algorithms of generating maze, we choose Depth-first search algorithm, one of the most common choices, and Prim's algorithm. DFS is suitable for what? Why Prim is special?
 
 For maze solution, we choose Breadth First Search algorithm. 
-This algorithm is suitable to find the shortest path since it looks for the exit as navigation. 
-It starts at a starting point, and visit other cells level by level, which means visiting all adjcent cells. 
+This algorithm is suitable to find the shortest path since it checks all neighbors by depth level. When it find the exit, it will break immediately.
 
 ### 1.4.1 Maze generating algorithm
 Depth-first search algorithm - iterative implementatoin (with stack)
@@ -79,9 +78,23 @@ without doing anything (to prevent creating loops/cycles).
 While the frontier list is completely empty and the maze is generated.
 
 ### 1.4.2 Maze solution path algorithm
-Since this algorithm explores the grid level by level, the first time when it reaches the exit, it is the shortest path. Imagine a picture of ripples in water, the first time when the ripple reaches shore, it is the shortest way.
+Since this algorithm explores the grid level by level, the first time when it reaches the exit, it is the shortest path. Close your eyes and imagine an image: you throw a stone in the water, there are ripples appear starting from the center point, the first time when the ripple reaches shore, it is the shortest way to find the path to shore.
 
-It is perfect for unweighted maze when compared with other A* and Dijkstra's algorithm, which requires additional heuristic or weight-tracking. DFS can also be used as maze solution algorithm, however, it goes by depth first and it may find the solution quickly, but it is not guaranteed as the shortest one.  
+It is perfect for unweighted maze when compared with other A* and Dijkstra's algorithm, which requires additional heuristic or weight-tracking. DFS can also be used as maze solution algorithm, however, it goes by depth first and it may find the solution quickly, but it is not guaranteed as the shortest one.
+
+This algorithm follows below steps:
+1. Start at the entry cell, push it to the queue and visited, and mark its parent cell(None at the start)
+2. While the queue is not empty
+    2.1 Left pop a cell from the queue and make it a current cell (first in first out)
+    2.2 If current cell
+        2.2.1 Is the exit, break the loop
+        2.2.2 Else, add all accessible neighbors. If neigbors are not visited:
+            2.2.2.1 Push the neighbor cell to visited
+            2.2.2.2 Push the neighbor cell to queue
+            2.2.2.3 Add current cell as neighbor cell's parent as key value pair in a dictionary
+
+When finally it reaches the exit, extra path from parent dictionary and reverse the path. This is the shortest solution for the maze. 
+
 
 ## 1.5 UI design
 We decide to use MiniLibX(MLX) as interface window. with MLX, we can have more space for UI design and make it more fun. 
@@ -91,6 +104,9 @@ We decide to use MiniLibX(MLX) as interface window. with MLX, we can have more s
 ## 2.2 How to run the program
 
 # 3. Resources
+[Grokking Algorithms: An Illustrated Guide for Programmers and Other Curious People](https://www.manning.com/books/grokking-algorithms)</br>
+I(sliang) will highly recommend this fun and interesting book. The appealing illustration makes the journey of understanding algorithms really fun. Big thanks for student *ekramer* providing this resource.
+
 [Python Documentation: Dataclass in Python](https://docs.python.org/3/library/dataclasses.html)
 
 [GeeksfoGeeks: Differences and Applications of List, Tuple, Set and Dictionary in Python](https://www.geeksforgeeks.org/python/differences-and-applications-of-list-tuple-set-and-dictionary-in-python/)
@@ -106,3 +122,4 @@ We decide to use MiniLibX(MLX) as interface window. with MLX, we can have more s
 [Wikipedia: Maze generation algorithm](https://en.wikipedia.org/wiki/Maze_generation_algorithm)
 
 [Breadth First Search or BFS for a Graph](https://www.geeksforgeeks.org/dsa/breadth-first-search-or-bfs-for-a-graph/)
+

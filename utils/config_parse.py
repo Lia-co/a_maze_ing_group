@@ -101,7 +101,7 @@ def parse_config() -> Config:
             pair = pair.strip()
             if pair.startswith("#") or not pair:
                 continue
-            if not "=" in pair:
+            if "=" not in pair:
                 raise SyntaxError(f"Key '{pair}' must have valid value, expect input: KEY=VALUE")
             
             # chunck pair into keys and values
@@ -125,7 +125,7 @@ def parse_config() -> Config:
     except ValueError as e:
         raise ValueError("Invalid value for 'WIDTH' or/and 'HEIGHT', expect digital input, e.g. 10") from e
 
-    if width <= 0 or height <=0:
+    if width <= 0 or height <= 0:
         raise ValueError(f"Invalid value for 'WIDTH' or/and 'HEIGHT. Integers must greater than 0")
 
     # check if ENTRY and EXIT are the same, inside of field, or located 42 pattern
@@ -151,7 +151,7 @@ def parse_config() -> Config:
     if seed < 0:
         raise ValueError(f"'SEED' must be positive integer")
     # check if ALGORITHM has valid digit strings
-    algorithm = data["ALGORITHM"]
+    algorithm = data["ALGORITHM"].upper()
 
     return Config(
         width=width,
