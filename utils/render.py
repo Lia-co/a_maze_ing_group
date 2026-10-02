@@ -3,12 +3,13 @@ from typing import Any
 from mlx import Mlx
 
 # amount of pixels x cell
-CELL = 30
+CELL = 20
 
+COLOR_BG = 0x1E1E1E      # Fondo oscuro de la celda
 COLOR_WALL = 0xFFFFFF   # white
 COLOR_ENTRY = 0x00FF00  # green
 COLOR_EXIT = 0xFF0000   # red
-
+COLOR_SPECIAL = 0x808080 # Grey for special cells (42 pattern)
 
 class MazeVisualizer:
 
@@ -80,6 +81,11 @@ class MazeVisualizer:
             (color >> 16) & 0xFF,
             255
         ])
+    # draws a rectangle of given width and height at (x, y) with the specified color
+    def draw_rect(self, x: int, y: int, width: int, height: int, color: int) -> None:
+        for dy in range(height):
+            for dx in range(width):
+                self.put_pixel(x + dx, y + dy, color)
 
     #draws vertical and horizontal lines on call
     def draw_horizontal(
@@ -109,6 +115,12 @@ class MazeVisualizer:
 
                 px = x * CELL
                 py = y * CELL
+
+                # Draw the cell rectangle
+                if hasattr(cell, 'is_special') and cell.is_special:
+                    self.draw_rect(px, py, CELL, CELL, COLOR_SPECIAL)
+                else:
+                    self.draw_rect(px, py, CELL, CELL, COLOR_BG)
 
                 if cell.north:
                     self.draw_horizontal(
@@ -198,11 +210,16 @@ class MazeVisualizer:
 
         except Exception:
             pass
+            
+        sys.exit(0)
 
         return 0
 
     def start(self) -> None:
-        # renders the maze
-        self.render_maze()
-        # keeps it running until closed
-        self.m.mlx_loop(self.ptr)
+
+        try:
+            self.render_maze()
+            self.m.mlx_loop(self.ptr)
+        except Exception as e:
+            print(f"Error detectado: {e}")
+            self.close()

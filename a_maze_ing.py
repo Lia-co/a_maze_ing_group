@@ -2,16 +2,16 @@
 
 from utils.config_parse import parse_config
 from utils.render import MazeVisualizer
-# from mazegen.prim import generate_prim_maze
+from mazegen.prim import generate_prim_maze
 from mazegen.dfs import dfs_maze_generate
 from utils.bfs_resolve import bfs_maze_solver
 
 
 if __name__ == "__main__":
     config = parse_config()
-    # maze = generate_prim_maze(config)
+    #maze = generate_prim_maze(config)
     maze = dfs_maze_generate(config)
-    solution_path = bfs_maze_solver(config, maze)
+    # solution_path = bfs_maze_solver(config, maze)
 
     # print maze for testing
     print(f"Laberinth generated: {len(maze[0])}x{len(maze)} ({len(maze) * len(maze[0])} total cells).")
@@ -35,3 +35,5 @@ if __name__ == "__main__":
         print("\nApplication interrupted by user.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+    print(f">>> VALOR DE CONFIG.PERFECT: {config.perfect} (Tipo: {type(config.perfect)})")
