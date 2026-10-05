@@ -6,7 +6,7 @@ from mazegen.prim import generate_prim_maze
 from mazegen.dfs import dfs_maze_generate
 from utils.bfs_solver import bfs_maze_solver
 from utils.cell import Cell
-from output_write import maze_to_hex
+from utils.output import write_output
 
 
 def print_maze(
@@ -54,16 +54,16 @@ if __name__ == "__main__":
     elif config.algorithm.upper() == "PRIM":
         maze = generate_prim_maze(config)
     solution = bfs_maze_solver(config, maze)
-    lines = maze_to_hex(maze, config)
 
     # --- print maze on terminal for testing ---
     print(f"\n--- DISPLAY MAZE ({config.width}x{config.height}) ---\n")
     print_maze(maze, config, solution)
-    print(solution)
-    print(lines)
-    if config.width < 15 and config.height < 15:
-        raise ValueError("The maze size is too small for 42 pattern. WIDTH & HEIGHT >= 15")
+    print(f"The solution is: {solution}")
+    write_output(maze, solution, config)
 
+    if config.width < 15 and config.height < 15:
+        raise ValueError("The maze size is too small for 42 pattern. "
+                         "WIDTH & HEIGHT >= 15")
 
     # renderer = MazeVisualizer(maze, config, solution)
     # try:

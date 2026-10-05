@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import output_write
+import utils.output as output
 from utils.config_parse import parse_config
 from utils.render import MazeVisualizer
 from mazegen.prim import generate_prim_maze
