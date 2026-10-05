@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from utils.config_parse import Config, parse_config
-# from utils.render import MazeVisualizer
+from utils.render import MazeVisualizer
 from mazegen.prim import generate_prim_maze
 from mazegen.dfs import dfs_maze_generate
 from utils.bfs_solver import bfs_maze_solver
@@ -65,12 +65,12 @@ if __name__ == "__main__":
         raise ValueError("The maze size is too small for 42 pattern. "
                          "WIDTH & HEIGHT >= 15")
 
-    # renderer = MazeVisualizer(maze, config, solution)
-    # try:
-    #     renderer.start()
-    # except KeyboardInterrupt:
-    #     print("\nApplication interrupted by user.")
-    # except Exception as e:
-    #     print(f"An error occurred: {e}")
+    renderer = MazeVisualizer(maze, config, solution)
+    try:
+        renderer.start()
+    except KeyboardInterrupt:
+        print("\nApplication interrupted by user.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-    # print(f">>> VALOR DE CONFIG.PERFECT: {config.perfect} (Tipo: {type(config.perfect)})")
+    print(f">>> VALOR DE CONFIG.PERFECT: {config.perfect} (Tipo: {type(config.perfect)})")

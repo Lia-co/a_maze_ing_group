@@ -109,6 +109,8 @@ I(sliang) will highly recommend this fun and interesting book. The appealing ill
 
 [Python Documentation: Dataclass in Python](https://docs.python.org/3/library/dataclasses.html)
 
+[MiniLibX Documentation by 42 students hsmits and jvan-sni](https://harm-smits.github.io/42docs/libs/minilibx/introduction.html)
+
 [GeeksfoGeeks: Differences and Applications of List, Tuple, Set and Dictionary in Python](https://www.geeksforgeeks.org/python/differences-and-applications-of-list-tuple-set-and-dictionary-in-python/)
 
 [W3Schools: Python Random seed() Method](https://www.w3schools.com/PYTHON/ref_random_seed.asp)

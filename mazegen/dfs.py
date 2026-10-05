@@ -82,16 +82,19 @@ def dfs_maze_generate(config: Any) -> List[List[Cell]]:
         for x_idx in range(width):
             if (x_idx, y_idx) in special_coords:
                 grid[y_idx][x_idx].is_special = True
-                grid[y_idx][x_idx].visited = True  
+                grid[y_idx][x_idx].visited = True
     # -----------------------------------------------------
 
     # 2. Pick the start cell and mark it as visited
-    init_cell: Tuple[int, int] = config.entry
-    x, y = init_cell
-    start_cell = grid[y][x]
-    
-    if start_cell.is_special:
-        raise ValueError("Entry point cannot be located inside the 42 pattern.")
+    init_pos: Tuple[int, int] = config.entry
+    x1, y1 = init_pos
+    start_cell = grid[y1][x1]
+    exit_pos: Tuple[int, int] = config.exit
+    x2, y2 = exit_pos
+    exit_cell = grid[y2][x2]
+
+    if start_cell.is_special or exit_cell.is_special:
+        raise ValueError("Entry/EXIT can't be located inside the 42 pattern.")
 
     start_cell.visited = True
     dfs_stack.append(start_cell)
