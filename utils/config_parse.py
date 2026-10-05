@@ -136,9 +136,9 @@ def parse_config() -> Config:
         raise ValueError(f"ENTRY and EXIT are the same. Please make them locating differently.")
     # bounce check needed more discussion
     if entry[0] >= width or exit[0] > width:
-        raise ValueError(f"ENTRY's x or/and EXIT's x are outside of width. Expect x <= {width}")
+        raise ValueError(f"ENTRY's x or/and EXIT's x are outside of width. Expect x <= {width - 1}")
     if entry[1] >= height or exit[1] >= height:
-        raise ValueError(f"ENTRY's y or/and EXIT's y are outside of height. Expect y <= {height}")
+        raise ValueError(f"ENTRY's y or/and EXIT's y are outside of height. Expect y <= {height - 1}")
     # assign variable output
     output = data["OUTPUT_FILE"]
     # assign variable perfect

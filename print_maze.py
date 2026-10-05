@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-from utils.config_parse import Config, parse_config
-# from utils.render import MazeVisualizer
+from utils.config_parse import parse_config
+from utils.render import MazeVisualizer
 from mazegen.prim import generate_prim_maze
 from mazegen.dfs import dfs_maze_generate
-from utils.bfs_solver import bfs_maze_solver
+from utils.bfs_resolve import bfs_maze_solver
 from utils.cell import Cell
-from output_write import maze_to_hex
-
+from utils.config_parse import Config
 
 def print_maze(
     grid: list[list[Cell]],
@@ -26,6 +25,8 @@ def print_maze(
             return " . "
         return "   "
 
+    print(f"Laberinth generated: {len(grid[0])}x{len(grid)} ({len(grid) * len(grid[0])} total cells).")
+    print(f"\n--- DISPLAY MAZE FOR TESTING ({config.width}x{config.height}) ---", end="\n\n")
     # Top border (north walls of row 0)
     top = "+"
     for x in range(width):
@@ -36,7 +37,7 @@ def print_maze(
         # Cell row: west wall, cell content, ... , east wall of last cell
         row = "|" if grid[y][0].west else " "
         for x in range(width):
-            row += cell_symbol(x, y)
+            row += cell_symbol(y, x)
             row += "|" if grid[y][x].east else " "
         print(row)
 
@@ -49,28 +50,11 @@ def print_maze(
 
 if __name__ == "__main__":
     config = parse_config()
-    if config.algorithm.upper() == "DFS":
-        maze = dfs_maze_generate(config)
-    elif config.algorithm.upper() == "PRIM":
-        maze = generate_prim_maze(config)
+    maze = generate_prim_maze(config)
+    # maze = dfs_maze_generate(config)
     solution = bfs_maze_solver(config, maze)
-    lines = maze_to_hex(maze, config)
 
-    # --- print maze on terminal for testing ---
-    print(f"\n--- DISPLAY MAZE ({config.width}x{config.height}) ---\n")
     print_maze(maze, config, solution)
     print(solution)
-    print(lines)
-    if config.width < 15 and config.height < 15:
-        raise ValueError("The maze size is too small for 42 pattern. WIDTH & HEIGHT >= 15")
 
-
-    # renderer = MazeVisualizer(maze, config, solution)
-    # try:
-    #     renderer.start()
-    # except KeyboardInterrupt:
-    #     print("\nApplication interrupted by user.")
-    # except Exception as e:
-    #     print(f"An error occurred: {e}")
-
-    # print(f">>> VALOR DE CONFIG.PERFECT: {config.perfect} (Tipo: {type(config.perfect)})")
+    

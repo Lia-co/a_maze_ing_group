@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 
+import output_write
 from utils.config_parse import parse_config
 from utils.render import MazeVisualizer
 from mazegen.prim import generate_prim_maze
 from mazegen.dfs import dfs_maze_generate
-from utils.bfs_resolve import bfs_maze_solver
+from utils.bfs_solver import bfs_maze_solver
 
 
 if __name__ == "__main__":
     config = parse_config()
-    #maze = generate_prim_maze(config)
-    maze = dfs_maze_generate(config)
-    # solution_path = bfs_maze_solver(config, maze)
+    if config.algorithm.upper() == "DFS":
+        maze = dfs_maze_generate(config)
+    elif config.algorithm.upper() == "PRIM":
+        maze = generate_prim_maze(config)
+    solution = bfs_maze_solver(config, maze)
 
     # print maze for testing
     print(f"Laberinth generated: {len(maze[0])}x{len(maze)} ({len(maze) * len(maze[0])} total cells).")
@@ -25,8 +28,6 @@ if __name__ == "__main__":
             line += left + top
         print(line)
     print("-" * 40)
-
-    solution = {(0, 0), (1, 0), (1, 1)}
 
     renderer = MazeVisualizer(maze, config, solution)
     try:
