@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import utils.output as output
 from utils.config_parse import parse_config
 from utils.render import MazeVisualizer
@@ -8,8 +9,9 @@ from mazegen.dfs import dfs_maze_generate
 from utils.bfs_solver import bfs_maze_solver
 
 
-if __name__ == "__main__":
-    config = parse_config()
+def main():
+    config_file = sys.argv[1]
+    config = parse_config(config_file)
     if config.algorithm.upper() == "DFS":
         maze = dfs_maze_generate(config)
     elif config.algorithm.upper() == "PRIM":
@@ -30,11 +32,14 @@ if __name__ == "__main__":
     print("-" * 40)
 
     renderer = MazeVisualizer(maze, config, solution)
+    renderer.start()
+
+
+
+if __name__ == "__main__":
     try:
-        renderer.start()
+        main()
     except KeyboardInterrupt:
         print("\nApplication interrupted by user.")
     except Exception as e:
         print(f"An error occurred: {e}")
-
-    print(f">>> VALOR DE CONFIG.PERFECT: {config.perfect} (Tipo: {type(config.perfect)})")

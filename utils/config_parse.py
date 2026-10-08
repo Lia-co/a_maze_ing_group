@@ -72,7 +72,7 @@ class Config:
     algorithm: str
 
 
-def parse_config() -> Config:
+def parse_config(filename: str) -> Config:    
     """
     Parse config.txt file to validate KEY=VALUE pair per line and return an immutable class 
     including valid data for later generating a maze.
@@ -91,10 +91,11 @@ def parse_config() -> Config:
     - if entry and exit are outside of width or height
     - if entry and exit are located in 42 decoration pattern(conditional)
     """
+    
     data: dict[str, str] = {}
 
     # open file with 'with', don't need to handle close file
-    with open("config.txt") as f:
+    with open(filename) as f:
         # ??? why using for loop for a file can get per line, and \n as a seperator
         # chunck each line from file into pairs with for loop, skip line start with '#' and empty line
         for pair in f:
