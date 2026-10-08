@@ -15,15 +15,20 @@ COLOR_PANEL = 0x111111   # Background of the menu panel
 
 class MazeVisualizer:
 
-    def __init__(self, maze: list, config: Any, solution: set) -> None:
+    def __init__(self, maze: list, config: Any, solution: list) -> None:
         self.maze = maze
         self.config = config
-        self.solution = solution
+        # Convert solution to an ordered list if it's a set, to animate step by step
+        self.solution = list(solution) if isinstance(solution, set) else solution
 
         # Interactive menu states
         self.show_path_flag = False
         self.color_index = 0
         self.wall_colors = [COLOR_WALL, 0x00FFFF, 0xFFD700, 0xFF69B4] # White, Cyan, Gold, Pink
+
+        # Animation states
+        self.animating_path = False
+        self.anim_index = 0
 
         # Total window dimensions (Maze + Bottom panel)
         self.win_width = config.width * CELL
@@ -124,9 +129,13 @@ class MazeVisualizer:
                 if cell.east:
                     self.draw_vertical(px + CELL - 1, py, current_wall_color)
 
-                # Show shortest path if active (Option 2)
+                # Show shortest path if active (Option 2) or during animation
                 if self.show_path_flag and (x, y) in self.solution:
                     self.draw_rect(px + 6, py + 6, CELL - 12, CELL - 12, 0x00FFFF)
+
+                # Animate path step by step (Option 5)
+                if self.animating_path and (x, y) in self.solution[:self.anim_index]:
+                    self.draw_rect(px + 6, py + 6, CELL - 12, CELL - 12, 0xFF00FF) # Magenta for animation trail
 
                 # Entry point
                 if (x, y) == self.config.entry:
@@ -148,11 +157,21 @@ class MazeVisualizer:
         # 4. Draw menu text with mlx_string_put on the bottom panel
         base_y = (self.config.height * CELL) + 15
         self.m.mlx_string_put(self.ptr, self.win, 20, base_y, 0xFFFFFF, "=== A-Maze-ing ===")
-        self.m.mlx_string_put(self.ptr, self.win, 20, base_y + 20, 0x00FF00, "1. Re-generate a new maze")
-        self.m.mlx_string_put(self.ptr, self.win, 20, base_y + 35, 0x00FFFF, "2. Show / Hide shortest path")
+        self.m.mlx_string_put(self.ptr, self.win, 20, base_y + 20, 0x00FF00, "1. Re-generate maze")
+        self.m.mlx_string_put(self.ptr, self.win, 20, base_y + 35, 0x00FFFF, "2. Show/Hide path | 5. Animate")
         self.m.mlx_string_put(self.ptr, self.win, 20, base_y + 50, 0xFFD700, "3. Rotate wall colours")
         self.m.mlx_string_put(self.ptr, self.win, 20, base_y + 65, 0xFF0000, "4. Quit (ESC)")
 
+        return 0
+
+    def loop_hook(self, *args: Any) -> int:
+        """Handles frame updates for path animation"""
+        if self.animating_path:
+            if self.anim_index < len(self.solution):
+                self.anim_index += 1
+                self.render_maze()
+            else:
+                self.animating_path = False
         return 0
 
     def on_key(self, keycode: int, *args: Any) -> int:
@@ -170,6 +189,10 @@ class MazeVisualizer:
             self.color_index = (self.color_index + 1) % len(self.wall_colors)
             print("Option 3: Rotating wall colors")
             self.render_maze()
+        elif keycode in (22, 53, 65435):     # Key '5': Start path animation
+            print("Option 5: Animating solution path...")
+            self.animating_path = True
+            self.anim_index = 0
         return 0
 
     def close(self, *args: Any) -> int:
@@ -188,6 +211,9 @@ class MazeVisualizer:
     def start(self) -> None:
         try:
             self.render_maze()
+            # Register loop hook for animations if supported by mlx wrapper
+            if hasattr(self.m, "mlx_loop_hook"):
+                self.m.mlx_loop_hook(self.ptr, self.loop_hook, None)
             self.m.mlx_loop(self.ptr)
         except Exception as e:
             print(f"Error detected: {e}")
