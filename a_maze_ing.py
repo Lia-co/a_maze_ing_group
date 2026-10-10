@@ -7,6 +7,7 @@ from utils.render import MazeVisualizer
 from mazegen.prim import generate_prim_maze
 from mazegen.dfs import dfs_maze_generate
 from utils.bfs_solver import bfs_maze_solver
+import utils.output as output
 
 
 def main():
@@ -17,6 +18,9 @@ def main():
     elif config.algorithm.upper() == "PRIM":
         maze = generate_prim_maze(config)
     solution = bfs_maze_solver(config, maze)
+
+    # write output file
+    output.write_output(maze, solution, config)
 
     # print maze for testing
     print(f"Laberinth generated: {len(maze[0])}x{len(maze)} ({len(maze) * len(maze[0])} total cells).")

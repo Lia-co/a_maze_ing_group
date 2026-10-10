@@ -4,7 +4,7 @@ VENV = .venv
 CFG = config.txt
 #what if it is already exits?
 MAIN = a_maze_ing.py
-OTP = maze.txt
+OTP = output_maze.txt
 # mypy flag
 MYPY_F = --explicit-package-bases --warn-return-any \
 		--ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
@@ -20,7 +20,7 @@ install:
 	$(PY) -m pip install -r requirements.txt
 	
 run: install
-	$(PY) $(MAIN) 
+	$(PY) $(MAIN) $(CFG)
 
 build:
 	$(PY) -m build  
